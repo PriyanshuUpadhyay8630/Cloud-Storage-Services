@@ -1,92 +1,192 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WhatsApp Payment</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Priyanshu Cloud Services | Premium Plans</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #7c3aed;
+            --secondary: #25d366;
+            --bg: #050505;
+            --card: rgba(255, 255, 255, 0.05);
+        }
 
-<style>
-body {
-    font-family: Arial;
-    text-align: center;
-    background: #f5f5f5;
-}
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at top center, #1e1b4b, #050505);
+            color: white;
+            margin: 0;
+            padding: 40px 10px;
+            text-align: center;
+            min-height: 100vh;
+        }
 
-/* QR Code */
-.qr-box {
-    margin-top: 50px;
-}
-.qr-box img {
-    width: 250px;
-    border-radius: 10px;
-}
+        h1 { font-size: 2.2rem; font-weight: 700; margin-bottom: 5px; background: linear-gradient(to right, #a78bfa, #f472b6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .tagline { color: #94a3b8; margin-bottom: 40px; font-size: 0.9rem; }
 
-/* WhatsApp Button */
-.floating-whatsapp {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #25D366;
-    color: white;
-    padding: 15px 20px;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: bold;
-    box-shadow: 2px 5px 15px rgba(0,0,0,0.3);
-    display: flex;
-    align-items: center;
-    z-index: 1000;
-}
+        /* Plans Grid */
+        .plans-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
 
-/* Hover */
-.floating-whatsapp:hover {
-    background-color: #128C7E;
-}
+        .plan-card {
+            background: var(--card);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 25px;
+            width: 240px;
+            transition: 0.4s;
+            cursor: pointer;
+            position: relative;
+        }
 
-/* Pulse Animation */
-@keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(37,211,102,0.7); }
-    70% { box-shadow: 0 0 0 15px rgba(37,211,102,0); }
-    100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); }
-}
-.floating-whatsapp {
-    animation: pulse 2s infinite;
-}
-</style>
+        .plan-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.2);
+        }
+
+        .plan-card.active {
+            border-color: var(--secondary);
+            background: rgba(37, 211, 102, 0.05);
+        }
+
+        .cloud-img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 10px rgba(167, 139, 250, 0.5));
+        }
+
+        .plan-title { font-size: 1.4rem; font-weight: 600; margin: 10px 0; }
+        .plan-price { font-size: 1.8rem; font-weight: 700; color: #f8fafc; }
+        .plan-price span { font-size: 0.9rem; color: #94a3b8; }
+
+        .select-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 0;
+            width: 100%;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Payment UI */
+        #paymentArea {
+            margin-top: 50px;
+            display: none;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        .qr-wrapper {
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .qr-wrapper img { width: 220px; display: block; border-radius: 10px; }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 700;
+            margin: 10px;
+            transition: 0.3s;
+        }
+
+        .wa-pay { background: var(--secondary); color: white; box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3); }
+        .wa-channel { border: 2px solid var(--primary); color: white; }
+
+        .wa-pay:hover, .wa-channel:hover { transform: scale(1.05); opacity: 0.9; }
+    </style>
 </head>
-
 <body>
 
-<h2>Payment QR Code</h2>
+    <h1>Priyanshu Cloud Storage</h1>
+    <p class="tagline">Ultra-Fast Personal Cloud Backup Solutions</p>
 
-<div class="qr-box">
-    <!-- अपना QR image यहाँ डालो -->
-    <img src="YOUR_QR_IMAGE_HERE.png" alt="QR Code">
-</div>
+    <div class="plans-container">
+        <div class="plan-card" onclick="selectPlan(this, '10GB', 20)">
+            <img src="https://cdn-icons-png.flaticon.com/512/3222/3222800.png" class="cloud-img" alt="Cloud">
+            <div class="plan-title">Basic Cloud</div>
+            <div class="plan-price">₹20 <span>/ One-time</span></div>
+            <button class="select-btn">Get 10GB</button>
+        </div>
 
-<p>Payment karne ke baad WhatsApp par screenshot bhejein</p>
+        <div class="plan-card" onclick="selectPlan(this, '20GB', 40)">
+            <img src="https://cdn-icons-png.flaticon.com/512/2675/2675848.png" class="cloud-img" alt="Cloud">
+            <div class="plan-title">Pro Cloud</div>
+            <div class="plan-price">₹40 <span>/ One-time</span></div>
+            <button class="select-btn">Get 20GB</button>
+        </div>
 
-<!-- WhatsApp Button -->
-<a href="https://wa.me/918630702134?text=Payment%20Done%20Maine%20Screenshot%20Bheja%20Hai"
-   onclick="openWhatsApp()"
-   class="floating-whatsapp">
-   💬 Chat on WhatsApp
-</a>
+        <div class="plan-card" onclick="selectPlan(this, '50GB', 80)">
+            <img src="https://cdn-icons-png.flaticon.com/512/1162/1162953.png" class="cloud-img" alt="Cloud">
+            <div class="plan-title">Ultra Cloud</div>
+            <div class="plan-price">₹80 <span>/ One-time</span></div>
+            <button class="select-btn">Get 50GB</button>
+        </div>
+    </div>
 
-<script>
-function openWhatsApp() {
-    // Backup method (agar pehla fail ho)
-    setTimeout(function() {
-        window.location.href = "https://api.whatsapp.com/send?phone=918630702134&text=Payment%20Done";
-    }, 1000);
-}
-</script>
+    <div id="paymentArea">
+        <h2 id="planDetail" style="color: #25d366;">Selected Plan: 10GB</h2>
+        
+        <div class="qr-wrapper">
+            <img src="qr.png" alt="Payment QR Code">
+        </div>
+        
+        <p style="color: #94a3b8;">Scan the QR code to pay, then send a screenshot.</p>
 
-<!-- Channel / QR direct link -->
-<br><br>
-<a href="https://wa.me/qr/P22URIWWE6ZID1" target="_blank">
-👉 WhatsApp QR/Channel Open Karein
-</a>
+        <div>
+            <a id="payLink" href="#" class="btn-action wa-pay" target="_blank">
+                ✅ I Have Paid (Send Screenshot)
+            </a>
+            <br>
+            <a href="https://wa.me/qr/P22URIWWE6ZID1" class="btn-action wa-channel" target="_blank">
+                📢 Join Our WhatsApp Channel
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function selectPlan(card, size, price) {
+            // Cards highlight effect
+            document.querySelectorAll('.plan-card').forEach(p => p.classList.remove('active'));
+            card.classList.add('active');
+
+            // Show payment info
+            const area = document.getElementById('paymentArea');
+            area.style.display = 'block';
+            document.getElementById('planDetail').innerText = `Selected: ${size} - ₹${price} Plan`;
+
+            // WhatsApp Message
+            let msg = `Hello! Maine ${size} Cloud Storage (₹${price}) ka payment kar diya hai. Niche payment ka screenshot hai.`;
+            let finalLink = `https://wa.me/918630702134?text=${encodeURIComponent(msg)}`;
+            
+            document.getElementById('payLink').href = finalLink;
+
+            // Scroll to payment
+            area.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
 
 </body>
 </html>
