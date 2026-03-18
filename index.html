@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WhatsApp Payment</title>
+
+<style>
+body {
+    font-family: Arial;
+    text-align: center;
+    background: #f5f5f5;
+}
+
+/* QR Code */
+.qr-box {
+    margin-top: 50px;
+}
+.qr-box img {
+    width: 250px;
+    border-radius: 10px;
+}
+
+/* WhatsApp Button */
+.floating-whatsapp {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #25D366;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 2px 5px 15px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Hover */
+.floating-whatsapp:hover {
+    background-color: #128C7E;
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(37,211,102,0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(37,211,102,0); }
+    100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); }
+}
+.floating-whatsapp {
+    animation: pulse 2s infinite;
+}
+</style>
+</head>
+
+<body>
+
+<h2>Payment QR Code</h2>
+
+<div class="qr-box">
+    <!-- अपना QR image यहाँ डालो -->
+    <img src="YOUR_QR_IMAGE_HERE.png" alt="QR Code">
+</div>
+
+<p>Payment karne ke baad WhatsApp par screenshot bhejein</p>
+
+<!-- WhatsApp Button -->
+<a href="https://wa.me/918630702134?text=Payment%20Done%20Maine%20Screenshot%20Bheja%20Hai"
+   onclick="openWhatsApp()"
+   class="floating-whatsapp">
+   💬 Chat on WhatsApp
+</a>
+
+<script>
+function openWhatsApp() {
+    // Backup method (agar pehla fail ho)
+    setTimeout(function() {
+        window.location.href = "https://api.whatsapp.com/send?phone=918630702134&text=Payment%20Done";
+    }, 1000);
+}
+</script>
+
+<!-- Channel / QR direct link -->
+<br><br>
+<a href="https://wa.me/qr/P22URIWWE6ZID1" target="_blank">
+👉 WhatsApp QR/Channel Open Karein
+</a>
+
+</body>
+</html>
