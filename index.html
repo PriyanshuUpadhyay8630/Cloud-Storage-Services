@@ -3,187 +3,212 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Priyanshu Cloud Services | Premium Plans</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Premium Cloud Storage - Buy Now</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #7c3aed;
-            --secondary: #25d366;
-            --bg: #050505;
-            --card: rgba(255, 255, 255, 0.05);
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        
         body {
-            font-family: 'Poppins', sans-serif;
-            background: radial-gradient(circle at top center, #1e1b4b, #050505);
+            background: #0f172a;
             color: white;
-            margin: 0;
-            padding: 40px 10px;
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
             min-height: 100vh;
         }
 
-        h1 { font-size: 2.2rem; font-weight: 700; margin-bottom: 5px; background: linear-gradient(to right, #a78bfa, #f472b6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .tagline { color: #94a3b8; margin-bottom: 40px; font-size: 0.9rem; }
-
-        /* Plans Grid */
-        .plans-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            max-width: 1000px;
-            margin: 0 auto;
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #38bdf8 0%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
         }
 
-        .plan-card {
-            background: var(--card);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255,255,255,0.1);
+        .subtitle { color: #94a3b8; margin-bottom: 40px; text-align: center; font-size: 0.9rem; }
+
+        /* Plans Section */
+        .plans-grid {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1000px;
+        }
+
+        .card {
+            background: rgba(30, 41, 59, 0.7);
+            border: 2px solid #334155;
             border-radius: 20px;
-            padding: 25px;
-            width: 240px;
-            transition: 0.4s;
+            padding: 30px;
+            width: 280px;
+            text-align: center;
+            transition: 0.3s;
             cursor: pointer;
             position: relative;
         }
 
-        .plan-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary);
-            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.2);
+        .card:hover, .card.active {
+            transform: translateY(-8px);
+            border-color: #38bdf8;
+            background: #1e293b;
+            box-shadow: 0 10px 25px rgba(56, 189, 248, 0.2);
         }
 
-        .plan-card.active {
-            border-color: var(--secondary);
-            background: rgba(37, 211, 102, 0.05);
-        }
+        .cloud-img { width: 70px; margin-bottom: 15px; }
 
-        .cloud-img {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 15px;
-            filter: drop-shadow(0 0 10px rgba(167, 139, 250, 0.5));
-        }
+        .card h3 { font-size: 1.4rem; margin-bottom: 10px; color: #f1f5f9; }
+        .price { font-size: 2.2rem; font-weight: 700; color: #38bdf8; }
+        .price span { font-size: 1rem; color: #94a3b8; font-weight: 400; }
 
-        .plan-title { font-size: 1.4rem; font-weight: 600; margin: 10px 0; }
-        .plan-price { font-size: 1.8rem; font-weight: 700; color: #f8fafc; }
-        .plan-price span { font-size: 0.9rem; color: #94a3b8; }
-
-        .select-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px 0;
-            width: 100%;
-            border-radius: 10px;
+        .select-badge {
+            background: #38bdf8;
+            color: #0f172a;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
             margin-top: 15px;
-            font-weight: 600;
-            cursor: pointer;
+            display: inline-block;
         }
 
         /* Payment UI */
-        #paymentArea {
+        #payment-area {
             margin-top: 50px;
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 25px;
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
             display: none;
             animation: slideUp 0.5s ease;
         }
 
-        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        .qr-wrapper {
+        .qr-box {
             background: white;
             padding: 15px;
             border-radius: 15px;
             display: inline-block;
-            margin-bottom: 15px;
+            margin: 20px 0;
         }
 
-        .qr-wrapper img { width: 220px; display: block; border-radius: 10px; }
+        .qr-box img { width: 220px; display: block; border-radius: 10px; }
 
-        .btn-action {
-            display: inline-flex;
+        /* Payment Method Logos */
+        .pay-logos {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
             align-items: center;
+        }
+
+        .pay-logos img { height: 25px; filter: grayscale(0.2); }
+
+        .wa-btn {
+            background: #25D366;
+            color: white;
             text-decoration: none;
-            padding: 15px 30px;
-            border-radius: 50px;
+            padding: 15px 25px;
+            border-radius: 12px;
             font-weight: 700;
-            margin: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
             transition: 0.3s;
         }
 
-        .wa-pay { background: var(--secondary); color: white; box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3); }
-        .wa-channel { border: 2px solid var(--primary); color: white; }
+        .wa-btn:hover { background: #1eb954; transform: scale(1.02); }
 
-        .wa-pay:hover, .wa-channel:hover { transform: scale(1.05); opacity: 0.9; }
+        .channel-link {
+            display: block;
+            margin-top: 20px;
+            color: #38bdf8;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
 
-    <h1>Priyanshu Cloud Storage</h1>
-    <p class="tagline">Ultra-Fast Personal Cloud Backup Solutions</p>
+    <h1>💾 Cloud Storage Plans</h1>
+    <p class="subtitle">Best Quality Storage at Lowest Price</p>
 
-    <div class="plans-container">
-        <div class="plan-card" onclick="selectPlan(this, '10GB', 20)">
-            <img src="https://cdn-icons-png.flaticon.com/512/3222/3222800.png" class="cloud-img" alt="Cloud">
-            <div class="plan-title">Basic Cloud</div>
-            <div class="plan-price">₹20 <span>/ One-time</span></div>
-            <button class="select-btn">Get 10GB</button>
+    <div class="plans-grid">
+        <div class="card" onclick="openPayment(this, '10GB', '20')">
+            <img src="https://cdn-icons-png.flaticon.com/512/3222/3222800.png" class="cloud-img">
+            <h3>Starter</h3>
+            <div class="price">₹20<span>/10GB</span></div>
+            <div class="select-badge">SELECT PLAN</div>
         </div>
 
-        <div class="plan-card" onclick="selectPlan(this, '20GB', 40)">
-            <img src="https://cdn-icons-png.flaticon.com/512/2675/2675848.png" class="cloud-img" alt="Cloud">
-            <div class="plan-title">Pro Cloud</div>
-            <div class="plan-price">₹40 <span>/ One-time</span></div>
-            <button class="select-btn">Get 20GB</button>
+        <div class="card" onclick="openPayment(this, '20GB', '40')">
+            <img src="https://cdn-icons-png.flaticon.com/512/2675/2675848.png" class="cloud-img">
+            <h3>Professional</h3>
+            <div class="price">₹40<span>/20GB</span></div>
+            <div class="select-badge">SELECT PLAN</div>
         </div>
 
-        <div class="plan-card" onclick="selectPlan(this, '50GB', 80)">
-            <img src="https://cdn-icons-png.flaticon.com/512/1162/1162953.png" class="cloud-img" alt="Cloud">
-            <div class="plan-title">Ultra Cloud</div>
-            <div class="plan-price">₹80 <span>/ One-time</span></div>
-            <button class="select-btn">Get 50GB</button>
+        <div class="card" onclick="openPayment(this, '50GB', '80')">
+            <img src="https://cdn-icons-png.flaticon.com/512/1162/1162953.png" class="cloud-img">
+            <h3>Ultra Space</h3>
+            <div class="price">₹80<span>/50GB</span></div>
+            <div class="select-badge">SELECT PLAN</div>
         </div>
     </div>
 
-    <div id="paymentArea">
-        <h2 id="planDetail" style="color: #25d366;">Selected Plan: 10GB</h2>
+    <div id="payment-area">
+        <h2 id="plan-name" style="color: #38bdf8;">Plan: 10GB Selected</h2>
         
-        <div class="qr-wrapper">
-            <img src="qr.png" alt="Payment QR Code">
+        <div class="qr-box">
+            <img src="qr.png" alt="Scan to Pay">
         </div>
-        
-        <p style="color: #94a3b8;">Scan the QR code to pay, then send a screenshot.</p>
 
-        <div>
-            <a id="payLink" href="#" class="btn-action wa-pay" target="_blank">
-                ✅ I Have Paid (Send Screenshot)
-            </a>
-            <br>
-            <a href="https://wa.me/qr/P22URIWWE6ZID1" class="btn-action wa-channel" target="_blank">
-                📢 Join Our WhatsApp Channel
-            </a>
+        <div class="pay-logos">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg" alt="UPI">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c4/PhonePe_Logo.svg" alt="PhonePe">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Google_Pay_Logo.svg" alt="GPay">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Paytm_Logo_%28standalone%29.svg" alt="Paytm">
         </div>
+
+        <p style="font-size: 0.8rem; color: #94a3b8;">Scan the QR and send screenshot to confirm</p>
+
+        <a id="wa-final" href="#" target="_blank" class="wa-btn">
+            📲 SEND SCREENSHOT NOW
+        </a>
+
+        <a href="https://wa.me/qr/P22URIWWE6ZID1" target="_blank" class="channel-link">
+            🔗 Join Official WhatsApp Channel
+        </a>
     </div>
 
     <script>
-        function selectPlan(card, size, price) {
-            // Cards highlight effect
-            document.querySelectorAll('.plan-card').forEach(p => p.classList.remove('active'));
+        function openPayment(card, plan, price) {
+            // Highlight card
+            document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
             card.classList.add('active');
 
-            // Show payment info
-            const area = document.getElementById('paymentArea');
+            // Show Area
+            const area = document.getElementById('payment-area');
             area.style.display = 'block';
-            document.getElementById('planDetail').innerText = `Selected: ${size} - ₹${price} Plan`;
+
+            // Update Text
+            document.getElementById('plan-name').innerText = "Plan: " + plan + " (₹" + price + ")";
 
             // WhatsApp Message
-            let msg = `Hello! Maine ${size} Cloud Storage (₹${price}) ka payment kar diya hai. Niche payment ka screenshot hai.`;
-            let finalLink = `https://wa.me/918630702134?text=${encodeURIComponent(msg)}`;
-            
-            document.getElementById('payLink').href = finalLink;
+            let text = "Hello! Maine " + plan + " Cloud Storage (₹" + price + ") ke liye payment kar di hai. Ye raha screenshot.";
+            let link = "https://wa.me/918630702134?text=" + encodeURIComponent(text);
+            document.getElementById('wa-final').href = link;
 
-            // Scroll to payment
+            // Scroll down
             area.scrollIntoView({ behavior: 'smooth' });
         }
     </script>
