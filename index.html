@@ -7,139 +7,36 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        
-        body {
-            background: #0f172a;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 40px 20px;
-            min-height: 100vh;
-        }
-
-        h1 {
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-            background: linear-gradient(90deg, #38bdf8 0%, #818cf8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-align: center;
-        }
-
+        body { background: #0f172a; color: white; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; min-height: 100vh; }
+        h1 { font-size: 2.2rem; margin-bottom: 10px; background: linear-gradient(90deg, #38bdf8 0%, #818cf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center; }
         .subtitle { color: #94a3b8; margin-bottom: 40px; text-align: center; font-size: 0.9rem; }
-
-        /* Plans Section */
-        .plans-grid {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-            max-width: 1000px;
-        }
-
-        .card {
-            background: rgba(30, 41, 59, 0.7);
-            border: 2px solid #334155;
-            border-radius: 20px;
-            padding: 30px;
-            width: 280px;
-            text-align: center;
-            transition: 0.3s;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .card:hover, .card.active {
-            transform: translateY(-8px);
-            border-color: #38bdf8;
-            background: #1e293b;
-            box-shadow: 0 10px 25px rgba(56, 189, 248, 0.2);
-        }
-
+        
+        .plans-grid { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; max-width: 1000px; }
+        .card { background: rgba(30, 41, 59, 0.7); border: 2px solid #334155; border-radius: 20px; padding: 30px; width: 280px; text-align: center; transition: 0.3s; cursor: pointer; }
+        .card:hover, .card.active { transform: translateY(-8px); border-color: #38bdf8; background: #1e293b; box-shadow: 0 10px 25px rgba(56, 189, 248, 0.2); }
         .cloud-img { width: 70px; margin-bottom: 15px; }
-
-        .card h3 { font-size: 1.4rem; margin-bottom: 10px; color: #f1f5f9; }
         .price { font-size: 2.2rem; font-weight: 700; color: #38bdf8; }
-        .price span { font-size: 1rem; color: #94a3b8; font-weight: 400; }
+        .price span { font-size: 1rem; color: #94a3b8; }
+        .select-badge { background: #38bdf8; color: #0f172a; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; margin-top: 15px; display: inline-block; }
 
-        .select-badge {
-            background: #38bdf8;
-            color: #0f172a;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            margin-top: 15px;
-            display: inline-block;
-        }
-
-        /* Payment UI */
-        #payment-area {
-            margin-top: 50px;
-            background: #1e293b;
-            padding: 30px;
-            border-radius: 25px;
-            max-width: 450px;
-            width: 100%;
-            text-align: center;
-            display: none;
-            animation: slideUp 0.5s ease;
-        }
-
+        #payment-area { margin-top: 50px; background: #1e293b; padding: 30px; border-radius: 25px; max-width: 450px; width: 100%; text-align: center; display: none; animation: slideUp 0.5s ease; border: 1px solid #38bdf8; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        .qr-box {
-            background: white;
-            padding: 15px;
-            border-radius: 15px;
-            display: inline-block;
-            margin: 20px 0;
-        }
-
+        .qr-box { background: white; padding: 15px; border-radius: 15px; display: inline-block; margin: 20px 0; }
+        /* ✅ QR CODE FIXED PERMANENTLY */
         .qr-box img { width: 220px; display: block; border-radius: 10px; }
 
-        /* Payment Method Logos */
-        .pay-logos {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 15px;
-            align-items: center;
-        }
+        .pay-logos { display: flex; justify-content: center; gap: 15px; margin-bottom: 15px; align-items: center; }
+        .pay-logos img { height: 25px; }
 
-        .pay-logos img { height: 25px; filter: grayscale(0.2); }
-
-        .wa-btn {
-            background: #25D366;
-            color: white;
-            text-decoration: none;
-            padding: 15px 25px;
-            border-radius: 12px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-            transition: 0.3s;
-        }
-
+        .wa-btn { background: #25D366; color: white; text-decoration: none; padding: 15px 25px; border-radius: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 20px; transition: 0.3s; }
         .wa-btn:hover { background: #1eb954; transform: scale(1.02); }
-
-        .channel-link {
-            display: block;
-            margin-top: 20px;
-            color: #38bdf8;
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
+        .channel-link { display: block; margin-top: 20px; color: #38bdf8; text-decoration: none; font-size: 0.85rem; font-weight: 600; }
     </style>
 </head>
 <body>
 
-    <h1>💾 Cloud Storage Plans</h1>
+    <h1>💾 Premium Cloud Storage</h1>
     <p class="subtitle">Best Quality Storage at Lowest Price</p>
 
     <div class="plans-grid">
@@ -166,52 +63,37 @@
     </div>
 
     <div id="payment-area">
-        <h2 id="plan-name" style="color: #38bdf8;">Plan: 10GB Selected</h2>
-        
+        <h2 id="plan-name" style="color: #38bdf8;">Plan Selected</h2>
         <div class="qr-box">
-            <img src="qr.png" alt="Scan to Pay">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=upi://pay?pa=8630702134@ybl%26pn=Priyanshu%26cu=INR" alt="QR Code">
         </div>
 
         <div class="pay-logos">
             <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg" alt="UPI">
             <img src="https://upload.wikimedia.org/wikipedia/commons/c/c4/PhonePe_Logo.svg" alt="PhonePe">
             <img src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Google_Pay_Logo.svg" alt="GPay">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Paytm_Logo_%28standalone%29.svg" alt="Paytm">
         </div>
 
-        <p style="font-size: 0.8rem; color: #94a3b8;">Scan the QR and send screenshot to confirm</p>
+        <p style="font-size: 0.85rem; color: #94a3b8;">PhonePe ya GPay se scan karke screenshot bhejein</p>
 
-        <a id="wa-final" href="#" target="_blank" class="wa-btn">
-            📲 SEND SCREENSHOT NOW
-        </a>
-
-        <a href="https://wa.me/qr/P22URIWWE6ZID1" target="_blank" class="channel-link">
-            🔗 Join Official WhatsApp Channel
-        </a>
+        <a id="wa-final" href="#" target="_blank" class="wa-btn">📲 SEND SCREENSHOT NOW</a>
+        <a href="https://wa.me/qr/P22URIWWE6ZID1" target="_blank" class="channel-link">🔗 Join Official WhatsApp Channel</a>
     </div>
 
     <script>
         function openPayment(card, plan, price) {
-            // Highlight card
             document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
             card.classList.add('active');
-
-            // Show Area
             const area = document.getElementById('payment-area');
             area.style.display = 'block';
-
-            // Update Text
             document.getElementById('plan-name').innerText = "Plan: " + plan + " (₹" + price + ")";
-
-            // WhatsApp Message
+            
+            // Dynamic Message
             let text = "Hello! Maine " + plan + " Cloud Storage (₹" + price + ") ke liye payment kar di hai. Ye raha screenshot.";
-            let link = "https://wa.me/918630702134?text=" + encodeURIComponent(text);
-            document.getElementById('wa-final').href = link;
-
-            // Scroll down
+            document.getElementById('wa-final').href = "https://wa.me/918630702134?text=" + encodeURIComponent(text);
+            
             area.scrollIntoView({ behavior: 'smooth' });
         }
     </script>
-
 </body>
 </html>
