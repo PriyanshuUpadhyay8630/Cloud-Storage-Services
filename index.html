@@ -16,24 +16,22 @@
         .plans-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; width: 100%; max-width: 1200px; margin-bottom: 40px; }
         
         .card { background: #0d1e2f; border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 25px; padding: 30px 15px; text-align: center; transition: 0.3s; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; }
-        .card:hover { transform: translateY(-8px); border-color: #38bdf8; }
+        .card:hover { transform: translateY(-8px); border-color: #38bdf8; box-shadow: 0 0 20px rgba(56, 189, 248, 0.1); }
         
-        #card-120GB { border: 2px solid #fbbf24; box-shadow: 0 0 25px rgba(251, 191, 36, 0.2); transform: scale(1.03); }
+        /* 120GB card ko normal blue theme me kar diya */
+        #card-120GB { border: 1px solid rgba(56, 189, 248, 0.2); transform: scale(1); }
+        #card-120GB:hover { border-color: #38bdf8; transform: translateY(-8px); }
         
         .badge { position: absolute; top: 12px; right: -35px; background: #38bdf8; color: #000; font-size: 0.6rem; font-weight: 800; padding: 5px 40px; transform: rotate(45deg); }
-        #card-120GB .badge { background: #fbbf24; }
-
-        .best-value { background: #fbbf24; color: #000; font-size: 0.7rem; font-weight: 800; padding: 4px 12px; border-radius: 20px; position: absolute; top: 10px; left: 10px; box-shadow: 0 2px 10px rgba(251, 191, 36, 0.4); }
 
         .cloud-icon { font-size: 2.8rem; margin-bottom: 15px; background: linear-gradient(135deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        .plan-size { font-size: 2.2rem; font-weight: 800; color: white; display: block; line-height: 1; margin-bottom: 5px; }
+        .plan-size { font-size: 2.2rem; font-weight: 800; color: white; display: block; line-height: 1; margin-bottom: 15px; }
         .bonus { color: #2ecc71; font-weight: 700; font-size: 0.8rem; margin-bottom: 15px; display: block; }
         
         .price { font-size: 1.8rem; font-weight: 800; color: #38bdf8; display: block; }
         .validity { font-size: 0.7rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; margin-bottom: 20px; display: block; }
 
-        /* Chhota aur Premium Button Styling */
         .select-btn { 
             background: #38bdf8; 
             color: #000; 
@@ -49,8 +47,6 @@
             transition: 0.2s;
         }
         .select-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #0369a1; }
-
-        #card-120GB .select-btn { background: #fbbf24; box-shadow: 0 4px 0 #b45309; }
 
         #payment-area { 
             display: none; max-width: 450px; width: 100%; margin-top: 40px; 
@@ -83,40 +79,36 @@
             <div class="badge">STARTER</div>
             <i class="fas fa-cloud cloud-icon"></i>
             <span class="plan-size">15GB</span>
-            <span class="bonus">+2GB Extra Free</span>
             <span class="price">₹25</span>
             <span class="validity">PER MONTH</span>
-            <button class="select-btn" onclick="act('15GB','15GB (15+2 Bonus)','25')">SELECT PLAN</button>
+            <button class="select-btn" onclick="act('15GB','15GB Plan','25')">SELECT PLAN</button>
         </div>
 
         <div class="card" id="card-30GB">
             <div class="badge">BASIC</div>
             <i class="fas fa-cloud cloud-icon"></i>
             <span class="plan-size">30GB</span>
-            <span class="bonus">+2GB Extra Free</span>
             <span class="price">₹45</span>
             <span class="validity">PER MONTH</span>
-            <button class="select-btn" onclick="act('30GB','30GB (30+2 Bonus)','45')">SELECT PLAN</button>
+            <button class="select-btn" onclick="act('30GB','30GB Plan','45')">SELECT PLAN</button>
         </div>
 
         <div class="card" id="card-60GB">
             <div class="badge">POPULAR</div>
             <i class="fas fa-cloud cloud-icon"></i>
             <span class="plan-size">60GB</span>
-            <span class="bonus">+2GB Extra Free</span>
             <span class="price">₹80</span>
             <span class="validity">PER MONTH</span>
-            <button class="select-btn" onclick="act('60GB','60GB (60+2 Bonus)','80')">SELECT PLAN</button>
+            <button class="select-btn" onclick="act('60GB','60GB Plan','80')">SELECT PLAN</button>
         </div>
 
         <div class="card" id="card-120GB">
-            <span class="best-value">BEST VALUE</span>
-            <div class="badge">PREMIUM</div>
-            <i class="fas fa-cloud cloud-icon" style="color:#fbbf24"></i>
-            <span class="plan-size" style="color:#fbbf24">120GB</span>
-            <span class="bonus" style="color:#fbbf24">+15GB EXTRA BONUS</span>
-            <span class="price" style="color:#fbbf24">₹160</span>
-            <span class="validity" style="color:#fbbf24">PER MONTH</span>
+            <div class="badge">ULTRA</div>
+            <i class="fas fa-cloud cloud-icon"></i>
+            <span class="plan-size">120GB</span>
+            <span class="bonus">+15GB EXTRA BONUS</span>
+            <span class="price">₹160</span>
+            <span class="validity">PER MONTH</span>
             <button class="select-btn" onclick="act('120GB','120GB (120+15 Bonus)','160')">SELECT PLAN</button>
         </div>
     </div>
@@ -136,13 +128,15 @@
 
     <script>
         function act(size, fullPlan, price) {
+            // Reset all borders
             document.querySelectorAll('.card').forEach(c => {
                 c.style.borderColor = "rgba(56,189,248,0.2)";
             });
             
+            // Highlight selected
             const targetCard = document.getElementById('card-' + size);
             if(targetCard) {
-                targetCard.style.borderColor = (size === '120GB') ? "#fbbf24" : "#38bdf8";
+                targetCard.style.borderColor = "#38bdf8";
             }
             
             const area = document.getElementById('payment-area');
