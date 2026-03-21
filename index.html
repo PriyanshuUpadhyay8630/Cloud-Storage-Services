@@ -114,6 +114,7 @@
 
     <script>
         function act(size, fullPlan, price) {
+            // Remove highlighting from others and add to selected
             document.querySelectorAll('.card').forEach(c => c.style.borderColor = "rgba(56,189,248,0.2)");
             document.getElementById('card-' + size).style.borderColor = "#38bdf8";
             
@@ -121,7 +122,9 @@
             area.style.display = 'block';
             document.getElementById('plan-display').innerText = fullPlan;
             
-            let msg = "Hello Sir, mujhe *" + fullPlan + "* wala Monthly Cloud Plan (Rs." + price + ") lena hai. Please Payment QR Code bhej dijiye.";
+            // Your exact requested message format
+            let msg = "Hello Sir, mujhe *" + fullPlan + "* Wala Monthly Cloud Plan (Rs." + price + ") Lena Hai. Please Payment Karne Ke Liye QR Code Bhej Dijiye.";
+            
             document.getElementById('wa-final').href = "https://wa.me/918630702134?text=" + encodeURIComponent(msg);
             
             setTimeout(() => { area.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 200);
