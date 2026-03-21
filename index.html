@@ -18,9 +18,14 @@
         .card { background: #0d1e2f; border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 25px; padding: 30px 15px; text-align: center; transition: 0.3s; position: relative; overflow: hidden; }
         .card:hover { transform: translateY(-8px); border-color: #38bdf8; }
         
-        #card-110GB { border: 2px solid #fbbf24; box-shadow: 0 0 20px rgba(251, 191, 36, 0.15); }
+        /* Premium Card Highlight */
+        #card-120GB { border: 2px solid #fbbf24; box-shadow: 0 0 25px rgba(251, 191, 36, 0.2); transform: scale(1.03); }
+        
         .badge { position: absolute; top: 12px; right: -35px; background: #38bdf8; color: #000; font-size: 0.6rem; font-weight: 800; padding: 5px 40px; transform: rotate(45deg); }
-        #card-110GB .badge { background: #fbbf24; }
+        #card-120GB .badge { background: #fbbf24; }
+
+        /* Best Value Tag */
+        .best-value { background: #fbbf24; color: #000; font-size: 0.7rem; font-weight: 800; padding: 4px 12px; border-radius: 20px; position: absolute; top: 10px; left: 10px; box-shadow: 0 2px 10px rgba(251, 191, 36, 0.4); }
 
         .cloud-icon { font-size: 2.8rem; margin-bottom: 15px; background: linear-gradient(135deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
@@ -31,7 +36,7 @@
         .validity { font-size: 0.7rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; margin-bottom: 20px; display: block; }
 
         .select-btn { background: #38bdf8; color: #000; padding: 12px; border-radius: 50px; font-weight: 700; border: none; cursor: pointer; width: 100%; box-shadow: 0 4px 0 #0369a1; }
-        #card-110GB .select-btn { background: #fbbf24; box-shadow: 0 4px 0 #b45309; }
+        #card-120GB .select-btn { background: #fbbf24; box-shadow: 0 4px 0 #b45309; }
 
         #payment-area { 
             display: none; max-width: 450px; width: 100%; margin-top: 40px; 
@@ -89,14 +94,15 @@
             <button class="select-btn" onclick="act('60GB','60GB (60+2 Bonus)','80')">SELECT PLAN</button>
         </div>
 
-        <div class="card" id="card-110GB">
+        <div class="card" id="card-120GB">
+            <span class="best-value">BEST VALUE</span>
             <div class="badge">PREMIUM</div>
             <i class="fas fa-cloud cloud-icon" style="color:#fbbf24"></i>
-            <span class="plan-size" style="color:#fbbf24">110GB</span>
-            <span class="bonus" style="color:#fbbf24">+2GB EXTRA BONUS</span>
-            <span class="price" style="color:#fbbf24">₹150</span>
+            <span class="plan-size" style="color:#fbbf24">120GB</span>
+            <span class="bonus" style="color:#fbbf24">+15GB EXTRA BONUS</span>
+            <span class="price" style="color:#fbbf24">₹160</span>
             <span class="validity" style="color:#fbbf24">PER MONTH</span>
-            <button class="select-btn" style="background:#fbbf24; box-shadow: 0 4px 0 #b45309;" onclick="act('110GB','110GB (110+2 Bonus)','150')">SELECT PLAN</button>
+            <button class="select-btn" style="background:#fbbf24; box-shadow: 0 4px 0 #b45309;" onclick="act('120GB','120GB (120+15 Bonus)','160')">SELECT PLAN</button>
         </div>
     </div>
 
@@ -114,18 +120,27 @@
 
     <script>
         function act(size, fullPlan, price) {
-            document.querySelectorAll('.card').forEach(c => c.style.borderColor = "rgba(56,189,248,0.2)");
-            document.getElementById('card-' + size).style.borderColor = "#38bdf8";
+            // Reset highlighting for all cards
+            document.querySelectorAll('.card').forEach(c => {
+                c.style.borderColor = "rgba(56,189,248,0.2)";
+            });
+            
+            // Highlight selected card (Blue for others, Gold for Premium)
+            const targetCard = document.getElementById('card-' + size);
+            if(targetCard) {
+                targetCard.style.borderColor = (size === '120GB') ? "#fbbf24" : "#38bdf8";
+            }
             
             const area = document.getElementById('payment-area');
             area.style.display = 'block';
             document.getElementById('plan-display').innerText = fullPlan;
             
-            // Fixed Message Format
+            // Generate WhatsApp Link
             let msg = "Hello Sir, Mujhe *" + fullPlan + "* Wala Monthly Cloud Plan (Rs." + price + ") Lena Hai. Please Payment Karne Ke Liye QR Code Bhej Dijiye.";
             
             document.getElementById('wa-final').href = "https://wa.me/918630702134?text=" + encodeURIComponent(msg);
             
+            // Scroll to payment area
             setTimeout(() => { area.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 200);
         }
     </script>
