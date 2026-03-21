@@ -13,15 +13,14 @@
         h1 { font-size: 2.2rem; background: linear-gradient(90deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; text-align: center; margin-bottom: 5px; }
         .subtitle { color: #94a3b8; font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 35px; text-transform: uppercase; }
         
-        /* Fixed Grid for 4 Plans */
         .plans-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; width: 100%; max-width: 1200px; margin-bottom: 40px; }
         
         .card { background: #0d1e2f; border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 25px; padding: 30px 15px; text-align: center; transition: 0.3s; position: relative; overflow: hidden; }
         .card:hover { transform: translateY(-8px); border-color: #38bdf8; }
         
-        #card-100GB { border: 2px solid #fbbf24; box-shadow: 0 0 20px rgba(251, 191, 36, 0.15); }
+        #card-110GB { border: 2px solid #fbbf24; box-shadow: 0 0 20px rgba(251, 191, 36, 0.15); }
         .badge { position: absolute; top: 12px; right: -35px; background: #38bdf8; color: #000; font-size: 0.6rem; font-weight: 800; padding: 5px 40px; transform: rotate(45deg); }
-        #card-100GB .badge { background: #fbbf24; }
+        #card-110GB .badge { background: #fbbf24; }
 
         .cloud-icon { font-size: 2.8rem; margin-bottom: 15px; background: linear-gradient(135deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
@@ -32,9 +31,8 @@
         .validity { font-size: 0.7rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; margin-bottom: 20px; display: block; }
 
         .select-btn { background: #38bdf8; color: #000; padding: 12px; border-radius: 50px; font-weight: 700; border: none; cursor: pointer; width: 100%; box-shadow: 0 4px 0 #0369a1; }
-        #card-100GB .select-btn { background: #fbbf24; box-shadow: 0 4px 0 #b45309; }
+        #card-110GB .select-btn { background: #fbbf24; box-shadow: 0 4px 0 #b45309; }
 
-        /* --- SCREENSHOT INTERFACE --- */
         #payment-area { 
             display: none; max-width: 450px; width: 100%; margin-top: 40px; 
             background: #0d1e2f; border: 1px solid rgba(56, 189, 248, 0.3); 
@@ -61,44 +59,44 @@
     <p class="subtitle">HIGH SPEED • SECURE • MONTHLY PLANS</p>
 
     <div class="plans-grid">
-        <div class="card" id="card-10GB">
-            <div class="badge">BONUS</div>
+        <div class="card" id="card-15GB">
+            <div class="badge">STARTER</div>
             <i class="fas fa-cloud cloud-icon"></i>
-            <span class="plan-size">10GB</span>
+            <span class="plan-size">15GB</span>
             <span class="bonus">+2GB Extra Free</span>
-            <span class="price">₹20</span>
+            <span class="price">₹25</span>
             <span class="validity">PER MONTH</span>
-            <button class="select-btn" onclick="act('10GB','12GB (10+2 Bonus)','20')">SELECT PLAN</button>
+            <button class="select-btn" onclick="act('15GB','17GB (15+2 Bonus)','25')">SELECT PLAN</button>
         </div>
 
-        <div class="card" id="card-20GB">
-            <div class="badge">PRO</div>
+        <div class="card" id="card-30GB">
+            <div class="badge">BASIC</div>
             <i class="fas fa-cloud cloud-icon"></i>
-            <span class="plan-size">20GB</span>
+            <span class="plan-size">30GB</span>
             <span class="bonus">+2GB Extra Free</span>
-            <span class="price">₹40</span>
+            <span class="price">₹45</span>
             <span class="validity">PER MONTH</span>
-            <button class="select-btn" onclick="act('20GB','22GB (20+2 Bonus)','40')">SELECT PLAN</button>
+            <button class="select-btn" onclick="act('30GB','32GB (30+2 Bonus)','45')">SELECT PLAN</button>
         </div>
 
-        <div class="card" id="card-50GB">
+        <div class="card" id="card-60GB">
             <div class="badge">POPULAR</div>
             <i class="fas fa-cloud cloud-icon"></i>
-            <span class="plan-size">50GB</span>
+            <span class="plan-size">60GB</span>
             <span class="bonus">+2GB Extra Free</span>
             <span class="price">₹80</span>
             <span class="validity">PER MONTH</span>
-            <button class="select-btn" onclick="act('50GB','52GB (50+2 Bonus)','80')">SELECT PLAN</button>
+            <button class="select-btn" onclick="act('60GB','62GB (60+2 Bonus)','80')">SELECT PLAN</button>
         </div>
 
-        <div class="card" id="card-100GB">
-            <div class="badge">MEGA DEAL</div>
+        <div class="card" id="card-110GB">
+            <div class="badge">PREMIUM</div>
             <i class="fas fa-cloud cloud-icon" style="color:#fbbf24"></i>
-            <span class="plan-size" style="color:#fbbf24">100GB</span>
-            <span class="bonus" style="color:#fbbf24">+10GB MEGA BONUS</span>
+            <span class="plan-size" style="color:#fbbf24">110GB</span>
+            <span class="bonus" style="color:#fbbf24">+2GB EXTRA BONUS</span>
             <span class="price" style="color:#fbbf24">₹150</span>
             <span class="validity" style="color:#fbbf24">PER MONTH</span>
-            <button class="select-btn" style="background:#fbbf24; box-shadow: 0 4px 0 #b45309;" onclick="act('100GB','110GB (100+10 MEGA Bonus)','150')">SELECT PLAN</button>
+            <button class="select-btn" style="background:#fbbf24; box-shadow: 0 4px 0 #b45309;" onclick="act('110GB','112GB (110+2 Bonus)','150')">SELECT PLAN</button>
         </div>
     </div>
 
@@ -123,7 +121,6 @@
             area.style.display = 'block';
             document.getElementById('plan-display').innerText = fullPlan;
             
-            // HINGLISH MESSAGE
             let msg = "Hello Sir, mujhe *" + fullPlan + "* wala Monthly Cloud Plan (Rs." + price + ") lena hai. Please Payment QR Code bhej dijiye.";
             document.getElementById('wa-final').href = "https://wa.me/918630702134?text=" + encodeURIComponent(msg);
             
