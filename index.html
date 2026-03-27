@@ -18,10 +18,6 @@
         .card { background: #0d1e2f; border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 25px; padding: 30px 15px; text-align: center; transition: 0.3s; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; }
         .card:hover { transform: translateY(-8px); border-color: #38bdf8; box-shadow: 0 0 20px rgba(56, 189, 248, 0.1); }
         
-        /* 120GB card ko normal blue theme me kar diya */
-        #card-120GB { border: 1px solid rgba(56, 189, 248, 0.2); transform: scale(1); }
-        #card-120GB:hover { border-color: #38bdf8; transform: translateY(-8px); }
-        
         .badge { position: absolute; top: 12px; right: -35px; background: #38bdf8; color: #000; font-size: 0.6rem; font-weight: 800; padding: 5px 40px; transform: rotate(45deg); }
 
         .cloud-icon { font-size: 2.8rem; margin-bottom: 15px; background: linear-gradient(135deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
@@ -32,21 +28,29 @@
         .price { font-size: 1.8rem; font-weight: 800; color: #38bdf8; display: block; }
         .validity { font-size: 0.7rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; margin-bottom: 20px; display: block; }
 
+        /* --- PREMIUM BUTTON DESIGN --- */
         .select-btn { 
-            background: #38bdf8; 
+            background: linear-gradient(135deg, #38bdf8, #818cf8); 
             color: #000; 
-            padding: 10px 25px; 
+            padding: 12px 28px; 
             border-radius: 50px; 
-            font-weight: 700; 
+            font-weight: 800; 
             font-size: 0.85rem;
             border: none; 
             cursor: pointer; 
             width: auto; 
-            min-width: 140px;
-            box-shadow: 0 4px 0 #0369a1; 
-            transition: 0.2s;
+            min-width: 150px;
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3); 
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        .select-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #0369a1; }
+        .select-btn:hover { 
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(56, 189, 248, 0.5);
+            filter: brightness(1.1);
+        }
+        .select-btn:active { transform: scale(0.98); }
 
         #payment-area { 
             display: none; max-width: 450px; width: 100%; margin-top: 40px; 
@@ -62,7 +66,9 @@
             background: #2ecc71; color: white; text-decoration: none; padding: 20px; 
             border-radius: 35px; font-weight: 800; display: flex; flex-direction: column; 
             align-items: center; justify-content: center; gap: 5px; box-shadow: 0 12px 30px rgba(46, 204, 113, 0.3);
+            transition: 0.3s;
         }
+        .wa-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(46, 204, 113, 0.4); }
         .wa-btn div { display: flex; align-items: center; gap: 10px; font-size: 1.3rem; }
         
         .foot-note { font-size: 0.75rem; color: #94a3b8; margin-top: 25px; opacity: 0.8; }
@@ -128,12 +134,10 @@
 
     <script>
         function act(size, fullPlan, price) {
-            // Reset all borders
             document.querySelectorAll('.card').forEach(c => {
                 c.style.borderColor = "rgba(56,189,248,0.2)";
             });
             
-            // Highlight selected
             const targetCard = document.getElementById('card-' + size);
             if(targetCard) {
                 targetCard.style.borderColor = "#38bdf8";
@@ -145,7 +149,8 @@
             document.getElementById('plan-display').innerText = fullPlan;
             document.getElementById('price-display').innerText = "₹" + price;
             
-            let msg = "Hello Sir, Mujhe *" + fullPlan + "* Wala Monthly Cloud Plan (Rs." + price + ") Lena Hai. Please Payment Karne Ke Liye QR Code Bhej Dijiye.";
+            // Updated Message Format (Aapke bataye anusar)
+            let msg = "Hello Sir, Mujhe *" + fullPlan + "* Wala Monthly Cloud Plan Lena Hai. (Rs." + price + ") Please Payment Karne Ke Liye QR Code Bhej Dijiye.";
             
             document.getElementById('wa-final').href = "https://wa.me/918630702134?text=" + encodeURIComponent(msg);
             
