@@ -235,7 +235,8 @@
         <span id="price-display" class="price-val"></span>
         <span id="price-calc-detail" class="calc-detail"></span>
         
-        <a id="wa-final" href="#" target="_blank" class="wa-btn">
+        <!-- Yahan par 'target="_blank"' hata diya gaya hai Chrome Issue theek karne ke liye -->
+        <a id="wa-final" href="#" class="wa-btn">
             <div><i class="fab fa-whatsapp"></i> START YOUR PLAN</div>
             <span style="font-weight:400; font-size:0.8rem;">QR Code on WhatsApp (Instant)</span>
         </a>
@@ -246,7 +247,7 @@
         let globalPlanName = "";
         let globalMonthlyPrice = 0;
         
-        // Aapka updated WhatsApp Number yahan add kar diya gaya hai (Country Code 91 ke sath)
+        // Aapka WhatsApp Number (Country Code 91 ke sath)
         const phoneNumber = "918630702134"; 
 
         function act(size, fullPlan, price) {
@@ -312,10 +313,10 @@
                 }
             }
 
-            // WhatsApp Message Generation using Official API link (Fixed)
+            // Chrome URL Fix: https://wa.me/ use kiya gaya hai jisse direct redirect ho jaye bina kisi error ke
             const message = `Hello, I want to buy the ${fullPlanText} plan. Total Price: ₹${finalPrice}. Please provide the payment details.`;
             const encodedMessage = encodeURIComponent(message);
-            document.getElementById('wa-final').href = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
+            document.getElementById('wa-final').href = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
         }
 
         function calculateCustomStorage() {
