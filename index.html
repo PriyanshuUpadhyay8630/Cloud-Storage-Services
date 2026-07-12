@@ -52,19 +52,81 @@
 
         .proc-text { font-weight: 800; font-size: 1.8rem; text-transform: uppercase; margin-bottom: 20px; color: white; line-height: 1.2; }
         
-        .month-selector { margin: 20px 0; background: #050a14; padding: 15px; border-radius: 20px; border: 1px solid rgba(56, 189, 248, 0.1); }
-        .month-options { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
-        .month-btn { 
-            background: transparent; color: #94a3b8; border: 1px solid #94a3b8; 
-            padding: 8px 15px; border-radius: 50px; cursor: pointer; transition: 0.3s;
-            font-weight: 600; font-size: 0.8rem; outline: none;
-        }
-        .month-btn:hover { border-color: #38bdf8; color: white; }
-        .month-btn.active { background: rgba(56, 189, 248, 0.2); border-color: #38bdf8; color: #38bdf8; }
-
         .plan-val { color: #38bdf8; font-size: 1.4rem; font-weight: 800; margin-bottom: 5px; line-height: 1.2;}
-        .price-val { color: #2ecc71; font-size: 2.2rem; font-weight: 800; display: block; }
+        .price-val { color: #2ecc71; font-size: 2.2rem; font-weight: 800; display: block; margin-top: 15px; }
         .calc-detail { color: #94a3b8; font-size: 0.85rem; margin-bottom: 25px; display: block; font-weight: normal; }
+
+        /* ----- UPGRADED SELECT DURATION UI ----- */
+        .month-selector { 
+            margin: 25px 0; 
+            background: rgba(5, 10, 20, 0.7); 
+            padding: 22px 20px; 
+            border-radius: 20px; 
+            border: 1px solid rgba(56, 189, 248, 0.15); 
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+        }
+        
+        .month-selector p {
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #38bdf8; 
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 18px;
+        }
+
+        .month-options { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 12px; 
+        }
+
+        .month-btn { 
+            position: relative;
+            background: #0d1e2f; 
+            color: #94a3b8; 
+            border: 1px solid rgba(148, 163, 184, 0.2); 
+            padding: 12px 10px; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 700; 
+            font-size: 0.9rem; 
+            outline: none;
+            /* Overflow hidden removed here to let the badge pop out */
+        }
+
+        .month-btn:hover { 
+            border-color: rgba(56, 189, 248, 0.5); 
+            color: white; 
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.1);
+        }
+
+        .month-btn.active { 
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(129, 140, 248, 0.15)); 
+            border-color: #38bdf8; 
+            color: #38bdf8; 
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.2), inset 0 0 10px rgba(56, 189, 248, 0.1);
+        }
+
+        /* "10% OFF" Floating Badge */
+        #btn-month-12::after {
+            content: "10% OFF";
+            position: absolute;
+            top: -12px;  
+            right: -8px; 
+            background: #ef4444; 
+            color: white;
+            font-size: 0.6rem;
+            padding: 4px 8px;
+            border-radius: 8px; 
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 10px rgba(239, 68, 68, 0.4); 
+            z-index: 10;
+        }
+        /* --------------------------------------- */
 
         /* WHATSAPP BUTTON STYLES */
         .wa-btn { 
@@ -86,6 +148,7 @@
     <h1>Premium Cloud</h1>
     <p class="subtitle">HIGH SPEED • SECURE • MONTHLY PLANS</p>
 
+    <!-- PLAN CARDS GRID -->
     <div class="plans-grid">
         <div class="card" id="card-15GB">
             <div class="badge">STARTER</div>
@@ -135,7 +198,6 @@
         </div>
 
         <div class="card" id="card-custom">
-            <!-- YELLOW COLOR REMOVED FROM BADGE TO MATCH OTHER CARDS -->
             <div class="badge">CUSTOM</div>
             <i class="fas fa-cloud cloud-icon"></i>
             
@@ -154,6 +216,7 @@
         </div>
     </div>
 
+    <!-- FINAL CHECKOUT AREA -->
     <div id="payment-area">
         <h2 class="proc-text">FINAL CHECKOUT</h2>
         
@@ -161,7 +224,7 @@
         <div id="plan-display" class="plan-val">--</div>
         
         <div class="month-selector">
-            <p style="color:white; font-size:0.9rem; font-weight: bold;">Select Duration:</p>
+            <p>Select Duration:</p>
             <div class="month-options">
                 <button class="month-btn active" id="btn-month-1" onclick="setMonths(1)">1 Month</button>
                 <button class="month-btn" id="btn-month-3" onclick="setMonths(3)">3 Months</button>
@@ -189,10 +252,12 @@
         const phoneNumber = "91YOUR_NUMBER_HERE"; 
 
         function act(size, fullPlan, price) {
+            // Reset all card borders
             document.querySelectorAll('.card').forEach(c => {
                 c.style.borderColor = "rgba(56,189,248,0.2)";
             });
             
+            // Highlight selected card
             const targetCard = document.getElementById('card-' + size);
             if(targetCard) {
                 targetCard.style.borderColor = "#38bdf8";
@@ -204,29 +269,53 @@
             const area = document.getElementById('payment-area');
             area.style.display = 'block';
             
+            // Default 1 Month setup
             setMonths(1);
             
+            // Smooth scroll to checkout area
             setTimeout(() => { area.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 200);
         }
 
         function setMonths(months) {
+            // Update Active Buttons UI
             document.querySelectorAll('.month-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById('btn-month-' + months).classList.add('active');
             
-            const totalPrice = globalMonthlyPrice * months;
+            // Logic for Price & Discount
+            let originalPrice = globalMonthlyPrice * months;
+            let finalPrice = originalPrice;
+            let isDiscounted = false;
+
+            // 10% Discount logic specifically for 1 Year (12 Months)
+            if (months === 12) {
+                finalPrice = Math.floor(originalPrice * 0.9); // Applies 10% OFF
+                isDiscounted = true;
+            }
+            
             const monthText = months === 1 ? '1 Month' : (months === 12 ? '1 Year' : months + ' Months');
             const fullPlanText = globalPlanName + ' [' + monthText + ']';
             
             document.getElementById('plan-display').innerText = fullPlanText;
-            document.getElementById('price-display').innerText = "₹" + totalPrice;
             
-            if(months > 1) {
-                document.getElementById('price-calc-detail').innerText = `(₹${globalMonthlyPrice} × ${months} Months)`;
+            // UI update for Price Display
+            if (isDiscounted) {
+                // Shows strike-through original price in red and final price in green
+                document.getElementById('price-display').innerHTML = `<span style="text-decoration: line-through; color: #ef4444; font-size: 1.2rem; margin-right: 10px;">₹${originalPrice}</span>₹${finalPrice}`;
+                document.getElementById('price-calc-detail').innerText = `(10% OFF Special - Save ₹${originalPrice - finalPrice})`;
+                document.getElementById('price-calc-detail').style.color = "#2ecc71"; 
             } else {
-                document.getElementById('price-calc-detail').innerText = `(₹${globalMonthlyPrice} per month)`;
+                // Normal pricing display
+                document.getElementById('price-display').innerText = "₹" + finalPrice;
+                document.getElementById('price-calc-detail').style.color = "#94a3b8"; 
+                if(months > 1) {
+                    document.getElementById('price-calc-detail').innerText = `(₹${globalMonthlyPrice} × ${months} Months)`;
+                } else {
+                    document.getElementById('price-calc-detail').innerText = `(₹${globalMonthlyPrice} per month)`;
+                }
             }
 
-            const message = `Hello, I want to buy the ${fullPlanText} plan. Total Price: ₹${totalPrice}. Please provide the payment details.`;
+            // WhatsApp Message Generation
+            const message = `Hello, I want to buy the ${fullPlanText} plan. Total Price: ₹${finalPrice}. Please provide the payment details.`;
             const encodedMessage = encodeURIComponent(message);
             document.getElementById('wa-final').href = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
         }
@@ -240,6 +329,7 @@
             const storageDisplay = document.getElementById('custom-storage-display');
             const priceDisplay = document.getElementById('custom-price-display');
 
+            // Validation check
             if (targetGb <= 240 || isNaN(targetGb)) {
                 warningText.style.display = 'block';
                 buyBtn.disabled = true;
@@ -255,11 +345,11 @@
             buyBtn.style.opacity = '1';
             buyBtn.style.cursor = 'pointer';
 
+            // Custom Pricing Logic
             const baseGb = 240;
             const extraGbRequired = targetGb - baseGb; 
             const extraIds = Math.ceil(extraGbRequired / 14); 
             const actualGb = baseGb + (extraIds * 14); 
-            
             const price = actualGb * 2; 
 
             storageDisplay.innerText = actualGb + 'GB';
@@ -286,5 +376,4 @@
         }
     </script>
 </body>
-                </html>
-    
+</html>
