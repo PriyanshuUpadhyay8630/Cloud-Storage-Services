@@ -10,7 +10,7 @@
         body { background: #030712; color: #fff; display: flex; flex-direction: column; align-items: center; padding: 30px 15px; min-height: 100vh; overflow-x: hidden; }
         #bg-canvas { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
         
-        /* PREMIUM CLOUD TITLE - LARGER SIZE */
+        /* PREMIUM CLOUD TITLE */
         h1 { 
             font-size: clamp(2rem, 7vw, 3.5rem); 
             background: linear-gradient(135deg, #38bdf8, #818cf8, #c084fc); 
@@ -24,7 +24,7 @@
             text-shadow: 0 10px 30px rgba(56, 189, 248, 0.25);
         }
         
-        /* SUBTITLE - WITHOUT "3D" */
+        /* SUBTITLE */
         .subtitle { 
             color: #38bdf8; 
             font-size: clamp(0.75rem, 2.5vw, 0.9rem); 
@@ -126,11 +126,11 @@
     <p class="subtitle">ULTRA-FAST • SECURE • STORAGE</p>
 
     <div class="plans-grid">
-        <div class="card" id="card-15GB"><div class="badge">STARTER</div><div class="card-3d"><i class="fas fa-cloud cloud-icon"></i><span class="plan-size">15GB</span><span class="price">₹25</span><span class="validity">PER MONTH</span><button class="select-btn" onclick="act('15GB','15GB Plan',25)">SELECT PLAN</button></div></div>
-        <div class="card" id="card-30GB"><div class="badge">BASIC</div><div class="card-3d"><i class="fas fa-cloud cloud-icon"></i><span class="plan-size">30GB</span><span class="price">₹45</span><span class="validity">PER MONTH</span><button class="select-btn" onclick="act('30GB','30GB Plan',45)">SELECT PLAN</button></div></div>
-        <div class="card" id="card-60GB"><div class="badge">POPULAR</div><div class="card-3d"><i class="fas fa-cloud cloud-icon"></i><span class="plan-size">60GB</span><span class="price">₹80</span><span class="validity">PER MONTH</span><button class="select-btn" onclick="act('60GB','60GB Plan',80)">SELECT PLAN</button></div></div>
-        <div class="card" id="card-120GB"><div class="badge">ULTRA</div><div class="card-3d"><i class="fas fa-cloud cloud-icon"></i><span class="plan-size">120GB</span><span class="bonus">+15GB EXTRA BONUS</span><span class="price">₹160</span><span class="validity">PER MONTH</span><button class="select-btn" onclick="act('120GB','120GB (+15 Bonus)',160)">SELECT PLAN</button></div></div>
-        <div class="card" id="card-240GB"><div class="badge">ELITE</div><div class="card-3d"><i class="fas fa-cloud cloud-icon"></i><span class="plan-size">240GB</span><span class="bonus">+30GB EXTRA BONUS</span><span class="price">₹480</span><span class="validity">PER MONTH</span><button class="select-btn" onclick="act('240GB','240GB (+30 Bonus)',480)">SELECT PLAN</button></div></div>
+        <div class="card" id="card-15GB"><div class="badge">STARTER</div><div class="card-3d"><i class="fas fa-cloud cloud-icon"></i><span class="plan-size">15GB</span><span class="price">₹25</span><span class="validity">PER MONTH</span><button class="select-btn" onclick="act('15GB','15GB Plan',25, 15, 0)">SELECT PLAN</button></div></div>
+        <div class="card" id="card-30GB"><div class="badge">BASIC</div><div class="card-3d"><i class="fas fa-cloud cloud-icon"></i><span class="plan-size">30GB</span><span class="price">₹45</span><span class="validity">PER MONTH</span><button class="select-btn" onclick="act('30GB','30GB Plan',45, 30, 0)">SELECT PLAN</button></div></div>
+        <div class="card" id="card-60GB"><div class="badge">POPULAR</div><div class="card-3d"><i class="fas fa-cloud cloud-icon"></i><span class="plan-size">60GB</span><span class="price">₹80</span><span class="validity">PER MONTH</span><button class="select-btn" onclick="act('60GB','60GB Plan',80, 60, 0)">SELECT PLAN</button></div></div>
+        <div class="card" id="card-120GB"><div class="badge">ULTRA</div><div class="card-3d"><i class="fas fa-cloud cloud-icon"></i><span class="plan-size">120GB</span><span class="bonus">+15GB EXTRA BONUS</span><span class="price">₹160</span><span class="validity">PER MONTH</span><button class="select-btn" onclick="act('120GB','120GB (+15 Bonus)',160, 120, 15)">SELECT PLAN</button></div></div>
+        <div class="card" id="card-240GB"><div class="badge">ELITE</div><div class="card-3d"><i class="fas fa-cloud cloud-icon"></i><span class="plan-size">240GB</span><span class="bonus">+30GB EXTRA BONUS</span><span class="price">₹480</span><span class="validity">PER MONTH</span><button class="select-btn" onclick="act('240GB','240GB (+30 Bonus)',480, 240, 30)">SELECT PLAN</button></div></div>
         
         <div class="card" id="card-custom">
             <div class="badge">CUSTOM</div>
@@ -197,16 +197,20 @@
         }
         drawBG();
 
-        // LOGIC & CHECKOUT
-        let globalPlan = "", globalPrice = 0, phone = "918630702134";
+        // LOGIC & CHECKOUT WITH DETAILED STORAGE CALCULATION
+        let globalPlan = "", globalPrice = 0, globalBaseGb = 0, globalBonusGb = 0, phone = "918630702134";
 
-        function act(size, plan, price) {
+        function act(size, plan, price, baseGb, bonusGb) {
             document.querySelectorAll('.card').forEach(c => c.classList.remove('active-plan'));
             
             const selected = document.getElementById('card-' + size);
             if(selected) selected.classList.add('active-plan');
             
-            globalPlan = plan; globalPrice = price;
+            globalPlan = plan; 
+            globalPrice = price;
+            globalBaseGb = baseGb;
+            globalBonusGb = bonusGb;
+
             const area = document.getElementById('payment-area'); 
             area.style.display = 'block';
             setMonths(1);
@@ -225,7 +229,19 @@
             document.getElementById('price-calc-detail').innerText = m === 12 ? `(10% OFF - Save ₹${orig - final})` : (m > 1 ? `(₹${globalPrice} × ${m} Months)` : `(₹${globalPrice} per month)`);
             document.getElementById('price-calc-detail').style.color = m === 12 ? "#10b981" : "#94a3b8";
 
-            document.getElementById('wa-final').href = `https://wa.me/${phone}?text=${encodeURIComponent(`Hello, I want to buy the ${fullText} plan. Total Price: ₹${final}. Please provide the payment details.`)}`;
+            // Total Storage Calculation
+            let totalStorage = globalBaseGb + globalBonusGb;
+            let message = "";
+
+            if(globalBonusGb > 0) {
+                // jab bonus ho (jaise 254GB + 70GB Bonus = 324GB Total)
+                message = `Hello, I want to buy the ${fullText} plan.\n- Base Storage: ${globalBaseGb}GB\n- Bonus Storage: ${globalBonusGb}GB\n- Total Storage: ${totalStorage}GB Total\n- Duration: ${label}\n- Price: ₹${final}\nPlease provide payment details.`;
+            } else {
+                // normal plans bina bonus ke
+                message = `Hello, I want to buy the ${fullText} plan.\n- Total Storage: ${globalBaseGb}GB\n- Duration: ${label}\n- Price: ₹${final}\nPlease provide payment details.`;
+            }
+
+            document.getElementById('wa-final').href = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
         }
 
         function calcCustom() {
@@ -235,15 +251,30 @@
                 document.getElementById('custom-storage-display').innerText = '--'; document.getElementById('custom-price-display').innerText = '--'; return;
             }
             document.getElementById('custom-warning').style.display = 'none'; btn.disabled = false; btn.style.opacity = '1';
-            let actualGb = 240 + (Math.ceil((gb - 240) / 14) * 14), price = actualGb * 2;
+            
+            let actualGb = 240 + (Math.ceil((gb - 240) / 14) * 14);
+            let price = actualGb * 2;
+            let bonusGb = 70;
+            
             document.getElementById('custom-storage-display').innerText = actualGb + 'GB';
             document.getElementById('custom-price-display').innerText = '₹' + price;
-            btn.setAttribute('data-gb', actualGb + 'GB Custom (+70 Bonus)'); btn.setAttribute('data-price', price);
+            
+            btn.setAttribute('data-gb', actualGb + 'GB Custom (+70 Bonus)');
+            btn.setAttribute('data-price', price);
+            btn.setAttribute('data-base', actualGb);
+            btn.setAttribute('data-bonus', bonusGb);
         }
 
         function selectCustom() {
             let btn = document.getElementById('custom-btn');
-            if(!btn.disabled) act('custom', btn.getAttribute('data-gb') || '254GB Custom (+70 Bonus)', parseInt(btn.getAttribute('data-price') || 508));
+            if(!btn.disabled) {
+                let planName = btn.getAttribute('data-gb') || '254GB Custom (+70 Bonus)';
+                let price = parseInt(btn.getAttribute('data-price') || 508);
+                let baseGb = parseInt(btn.getAttribute('data-base') || 254);
+                let bonusGb = parseInt(btn.getAttribute('data-bonus') || 70);
+                
+                act('custom', planName, price, baseGb, bonusGb);
+            }
         }
         window.onload = calcCustom;
     </script>
